@@ -16,8 +16,8 @@ urlMillenium = "https://www.mlp.com/"
 action = webdriver. ActionChains(driver)
 
 # Locators
-hamburger_menu = driver.find_element(By.XPATH, "//button[contains(@class,'MobileNav')]")
-navigation_menu = driver.find_element(By.ID, "//ul[@id='menu-primary-menu']")
+hamburger_menu = driver.find_element(By.XPATH, "//button[contains(@class,'primary-menu')]")
+navigation_menu = driver.find_element(By.XPATH, "//ul[@id='menu-primary-menu']")
 
 # Functions
 
@@ -32,7 +32,3 @@ def daley1_3():
 
 def clickHumburgerMenu(self):
     action.move_to_element(hamburger_menu).click()
-
-
-
-

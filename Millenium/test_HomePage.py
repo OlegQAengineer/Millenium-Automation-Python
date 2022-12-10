@@ -29,15 +29,17 @@ class ChromeSearch(unittest.TestCase):
         wait = WebDriverWait(driver, 3)
 
         action = webdriver.ActionChains(driver)
+        HP.pushHumburger(self)
 
-        action.move_to_element(driver.find_element(By.XPATH, HP.hamburgerMenu)).click().perform()
-        wait.until(EC.visibility_of_element_located((By.ID, "menu-primary-menu")))
+        #action.move_to_element(driver.find_element(By.XPATH, HP.hamburgerMenu)).click().perform()
+        wait.until(EC.visibility_of_element_located((By.ID, HP.navMenu)))
         print("Nav menu open")
         driver.get_screenshot_as_file('NavMenuOpen.png')
 
-        self.assertTrue(self, driver.find_element(By.ID, "menu-primary-menu"))
+        self.assertTrue(self, driver.find_element(By.ID, HP.navMenu))
 
     def tearDown(self):
         self.driver.quit()
+
 
 

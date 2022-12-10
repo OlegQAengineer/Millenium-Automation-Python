@@ -5,7 +5,7 @@ from selenium.webdriver.common.by import By
 
 
 from selenium.webdriver.support import expected_conditions as EC
-
+from page_objects.home_page import HomePage as HP
 from faker import Faker
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
@@ -21,7 +21,6 @@ class ChromeSearch(unittest.TestCase):
 
         self.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
         self.driver.maximize_window()
-
         time.sleep(5)
 
     def test_burgermenu(self):
@@ -31,15 +30,12 @@ class ChromeSearch(unittest.TestCase):
 
         action = webdriver.ActionChains(driver)
 
-        action.move_to_element(driver.find_element(By.XPATH, "//button[contains(@class,'primary-menu')]")).click().perform()
+        action.move_to_element(driver.find_element(By.XPATH, HP.hamburgerMenu)).click().perform()
         wait.until(EC.visibility_of_element_located((By.ID, "menu-primary-menu")))
         print("Nav menu open")
         driver.get_screenshot_as_file('NavMenuOpen.png')
 
         self.assertTrue(self, driver.find_element(By.ID, "menu-primary-menu"))
-
-
-
 
     def tearDown(self):
         self.driver.quit()

@@ -5,7 +5,7 @@ from selenium.webdriver.common.by import By
 
 
 from selenium.webdriver.support import expected_conditions as EC
-# from page_objects.home_pagePageObject import HomePage as HP
+from page_objects.page_objectHomeP import HomePage as HP
 from faker import Faker
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service

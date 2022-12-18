@@ -1,26 +1,53 @@
 
+import time
+import random
+import requests
+from selenium.common.exceptions import TimeoutException, NoSuchElementException
+from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.wait import WebDriverWait
+from faker import Faker
+
+faker_class = Faker()
 
 
-class HomePage:
-
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
-
-    action = webdriver.ActionChains(driver)
-
-    #locators
-    navMenu = By.XPATH, "//ul[@id='menu-primary-menu']"
-    hamburgerMenu = "//button[contains(@class,'primary-menu')]"
-    cookies = driver.find_element(By.XPATH, "//body/div[@id='global_cookie_policy']/div[1]/div[1]/a[1]")
-
+url = "https://www.mlp.com/"
+hamburgerMenuXP = "//button[contains(@class,'primary-menu')]"
+navMenuID = By.ID, 'menu-primary-menu'
+cookiesXP = '//a[text() = "I AGREE "]'
+cookies = By.XPATH, '//a[text() = "I AGREE "]'
+mLogoXP = "//img[contains(@class,'icon icon-white')]"
+mLogo = By.XPATH, "//img[contains(@class,'icon icon-white')]"
+titleText = "Millennium Management Global Investment"
+investorLoginXP = '//a[text() = " investor login "]'
 
 
+def delay():
+    time.sleep(random.randint(1, 3))
 
-   #functions
-    def pushHumburger(self):
-        return self.action.move_to_element(self.driver.find_element(By.XPATH, self.hamburgerMenu))\
-            .pause(1).click().perform()
+
+def clickElement(self, elementxp):
+    driver = self.driver
+    action = ActionChains(driver)
+    action.move_to_element(driver.find_element(By.XPATH, elementxp)).click().perform()
+
+
+def closeCookies(self):
+    driver = self.driver
+    action = ActionChains(driver)
+    action.move_to_element(driver.find_element(By.XPATH, cookiesXP)).click().perform()
+
+
+
+
+
+
+
+
+
+
+
+
+
 

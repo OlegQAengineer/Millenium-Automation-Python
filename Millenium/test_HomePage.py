@@ -1,49 +1,67 @@
 import time
 import unittest
-
-from selenium.webdriver.common.by import By
-
-
 from selenium.webdriver.support import expected_conditions as EC
-from page_objects.page_objectHomeP import HomePage as HP
-from faker import Faker
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support.wait import WebDriverWait
-from webdriver_manager.chrome import ChromeDriverManager
-
-faker_class = Faker()
+from Millenium.page_objects import page_objectHomeP as HP
 
 
-class ChromeSearch(unittest.TestCase):
+class ChromeSearchHP(unittest.TestCase):
 
     def setUp(self):
 
-        self.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+        self.driver = webdriver.Chrome()
         self.driver.maximize_window()
-        time.sleep(5)
+        self.driver.get(HP.url)
+        time.sleep(3)
 
+    # Check that a humburger menu is functional and navigation menu appear on the Home page
     def test_burgermenu(self):
-
         driver = self.driver
-        driver.get("https://www.mlp.com/")
-        wait = WebDriverWait(driver, 3)
-        action = webdriver.ActionChains(driver)
-        time.sleep(10)
+        wait = WebDriverWait(driver, 10)
+        wait.until(EC.visibility_of_element_located(HP.cookies))
+        HP.closeCookies(self)
+        HP.clickElement(self, HP.hamburgerMenuXP)
+        self.assertTrue(EC.visibility_of_element_located(HP.navMenuID))
+        HP.delay()
+        driver.get_screenshot_as_file('C:/Users/varts/PycharmProjects/Millenium-Automation-Python/Millenium/Screen_Shots/NavMenuOpen.png')
 
-        WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, "//body/div[@id='global_cookie_policy']/div[1]/div[1]/a[1]"))).click()
-        # HP.cookies.click()
-        # hp = HP()
-        # HP.pushHumburger(hp)
-        # action.move_to_element(driver.find_element(By.XPATH, HP.hamburgerMenu)).click().perform()
-        # # wait.until(EC.visibility_of_element_located(HP.navMenu))
-        # # print("Nav menu open")
-        # # driver.get_screenshot_as_file('NavMenuOpen.png')
+    # Check that logo 'm' is functional and leave us on the Home page
+    def test_mLogo(self):
+        driver = self.driver
+        wait = WebDriverWait(driver, 10)
+        wait.until(EC.visibility_of_element_located(HP.cookies))
+        HP.closeCookies(self)
+        HP.clickElement(self, HP.mLogoXP)
+        wait = WebDriverWait(driver, 10)
+        wait.until(EC.visibility_of_element_located(HP.mLogo))
+        actualTitle = driver.title
+
+        self.assertTrue(actualTitle == HP.titleText)
+        time.sleep(1)
+
+    # Check that "Investor Login" botton is functional and navigate us on the Investor Login Page
+    def test_InvestorLogin(self):
+        driver = self.driver
+        wait = WebDriverWait(driver, 10)
+        wait.until(EC.visibility_of_element_located(HP.cookies))
+        HP.closeCookies(self)
+        HP.clickElement(self, HP.investorLoginXP)
+        # wait = WebDriverWait(driver, 10)
+        # wait.until(EC.visibility_of_element_located(HP.mLogo))
+        # actualTitle = driver.title
         #
-        # self.assertTrue(HP.navMenu)
+        # self.assertTrue(actualTitle == HP.titleText)
+        # time.sleep(1)
 
     def tearDown(self):
         self.driver.quit()
+
+
+if __name__ == "__main__":
+    unittest.main()
+
+
 
 
 

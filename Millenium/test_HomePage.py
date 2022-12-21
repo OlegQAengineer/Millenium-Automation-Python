@@ -1,9 +1,17 @@
 import time
 import unittest
+from _ast import arguments
+
+from selenium.webdriver import ActionChains, Keys
+from selenium.webdriver.common import actions
+
+from Millenium import myHelpFunctions as HF
+from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium import webdriver
 from selenium.webdriver.support.wait import WebDriverWait
 from Millenium.page_objects import page_objectHomeP as HP
+from Millenium.page_objects import page_objectInvestorLogin as IL
 
 
 class ChromeSearchHP(unittest.TestCase):
@@ -23,7 +31,7 @@ class ChromeSearchHP(unittest.TestCase):
         HP.closeCookies(self)
         HP.clickElement(self, HP.hamburgerMenuXP)
         self.assertTrue(EC.visibility_of_element_located(HP.navMenuID))
-        HP.delay()
+        HF.delay()
         driver.get_screenshot_as_file('C:/Users/varts/PycharmProjects/Millenium-Automation-Python/Millenium/Screen_Shots/NavMenuOpen.png')
 
     # Check that logo 'm' is functional and leave us on the Home page
@@ -47,12 +55,34 @@ class ChromeSearchHP(unittest.TestCase):
         wait.until(EC.visibility_of_element_located(HP.cookies))
         HP.closeCookies(self)
         HP.clickElement(self, HP.investorLoginXP)
-        # wait = WebDriverWait(driver, 10)
-        # wait.until(EC.visibility_of_element_located(HP.mLogo))
-        # actualTitle = driver.title
-        #
-        # self.assertTrue(actualTitle == HP.titleText)
-        # time.sleep(1)
+        wait = WebDriverWait(driver, 10)
+        wait.until(EC.visibility_of_element_located(IL.mainTextInvestorLogin))
+        ActualText = driver.find_element(By.XPATH, IL.TextInvestorLoginXP).is_displayed()
+
+        self.assertTrue(ActualText)
+
+        # Check that Arrow botton is functional and scrolldown up to block "Operating System"
+    def test_ArrowFunctional(self):
+        driver = self.driver
+        wait = WebDriverWait(driver, 10)
+        wait.until(EC.visibility_of_element_located(HP.cookies))
+        HP.closeCookies(self)
+        driver.find_element(By.XPATH, HP.arrowDownXP).click()
+        HF.delay()
+        yScroll = driver.execute_script("return window.scrollY")
+        self.assertEqual(yScroll, 654)
+
+    def test_VidioBlockBotton(self):
+        driver = self.driver
+        wait = WebDriverWait(driver, 10)
+        wait.until(EC.visibility_of_element_located(HP.cookies))
+        HP.closeCookies(self)
+        HF.ScrolDownToElement(self.driver, driver.find_element(By.XPATH, HP.vidioPlayBtnXP))
+        HF.delay()
+        HF.clickElement(self, HP.vidioPlayBtnXP)
+        HF.delay()
+        styleActual = driver.find_element(By.XPATH, HP.vidioBlockXP).get_attribute("style")
+        self.assertEqual(styleActual, "display: none;")
 
     def tearDown(self):
         self.driver.quit()

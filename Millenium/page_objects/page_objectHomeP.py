@@ -21,23 +21,19 @@ mLogoXP = "//img[contains(@class,'icon icon-white')]"
 mLogo = By.XPATH, "//img[contains(@class,'icon icon-white')]"
 titleText = "Millennium Management Global Investment"
 investorLoginXP = '//a[text() = " investor login "]'
-
-
-def delay():
-    time.sleep(random.randint(1, 3))
-
-
-def clickElement(self, elementxp):
-    driver = self.driver
-    action = ActionChains(driver)
-    action.move_to_element(driver.find_element(By.XPATH, elementxp)).click().perform()
+arrowDownXP = '//a[@data-js-component="HashlessLink"]'
+textXP = "//h2[contains(text(),'Engineered to accelerate success')]"
+header = By.XPATH, "//header"
+vidioPlayBtn = By.XPATH, '//img[@alt="video play button"]'
+vidioPlayBtnXP = '//img[@alt="video play button"]'
+vidioBlock = By.XPATH, "//div[contains(@class,'player__play js')]"
+vidioBlockXP = "//div[contains(@class,'player__play js')]"
 
 
 def closeCookies(self):
     driver = self.driver
     action = ActionChains(driver)
     action.move_to_element(driver.find_element(By.XPATH, cookiesXP)).click().perform()
-
 
 
 

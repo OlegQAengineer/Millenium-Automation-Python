@@ -29,7 +29,7 @@ class ChromeSearchHP(unittest.TestCase):
         wait = WebDriverWait(driver, 10)
         wait.until(EC.visibility_of_element_located(HP.cookies))
         HP.closeCookies(self)
-        HP.clickElement(self, HP.hamburgerMenuXP)
+        HF.clickElement(self, HP.hamburgerMenuXP)
         self.assertTrue(EC.visibility_of_element_located(HP.navMenuID))
         HF.delay()
         driver.get_screenshot_as_file('C:/Users/varts/PycharmProjects/Millenium-Automation-Python/Millenium/Screen_Shots/NavMenuOpen.png')
@@ -40,7 +40,7 @@ class ChromeSearchHP(unittest.TestCase):
         wait = WebDriverWait(driver, 10)
         wait.until(EC.visibility_of_element_located(HP.cookies))
         HP.closeCookies(self)
-        HP.clickElement(self, HP.mLogoXP)
+        HF.clickElement(self, HP.mLogoXP)
         wait = WebDriverWait(driver, 10)
         wait.until(EC.visibility_of_element_located(HP.mLogo))
         actualTitle = driver.title
@@ -54,7 +54,7 @@ class ChromeSearchHP(unittest.TestCase):
         wait = WebDriverWait(driver, 10)
         wait.until(EC.visibility_of_element_located(HP.cookies))
         HP.closeCookies(self)
-        HP.clickElement(self, HP.investorLoginXP)
+        HF.clickElement(self, HP.investorLoginXP)
         wait = WebDriverWait(driver, 10)
         wait.until(EC.visibility_of_element_located(IL.mainTextInvestorLogin))
         ActualText = driver.find_element(By.XPATH, IL.TextInvestorLoginXP).is_displayed()
@@ -72,6 +72,7 @@ class ChromeSearchHP(unittest.TestCase):
         yScroll = driver.execute_script("return window.scrollY")
         self.assertEqual(yScroll, 654)
 
+    # Check that vidio block botton is functional and vidio open
     def test_VidioBlockBotton(self):
         driver = self.driver
         wait = WebDriverWait(driver, 10)
@@ -83,6 +84,27 @@ class ChromeSearchHP(unittest.TestCase):
         HF.delay()
         styleActual = driver.find_element(By.XPATH, HP.vidioBlockXP).get_attribute("style")
         self.assertEqual(styleActual, "display: none;")
+
+        # Check that Side bar interactive menu is functional
+    def test_SidebarInteractiveMenu(self):
+        driver = self.driver
+        wait = WebDriverWait(driver, 10)
+        wait.until(EC.visibility_of_element_located(HP.cookies))
+        HP.closeCookies(self)
+        HF.ScrolDownToElement(self.driver, driver.find_element(By.XPATH, HP.textInvestingEnv))
+        HF.delay()
+        menu = driver.find_elements(By.XPATH, HP.sideBarMenu3pc)
+        for e in menu:
+            HF.clickElements(self, e)
+            HF.delay()
+        # HF.clickElement(self, '//p[text() = "unique investing environment"]')
+        # time.sleep(2)
+        # yScroll = driver.execute_script("return window.scrollY")
+        # print(yScroll, "pixeli")
+        # driver.find_element(By.XPATH, HP.arrowDownXP).click()
+        # HF.delay()
+        # yScroll = driver.execute_script("return window.scrollY")
+        # self.assertEqual(yScroll, 654)
 
     def tearDown(self):
         self.driver.quit()

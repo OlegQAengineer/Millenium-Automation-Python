@@ -20,6 +20,10 @@ def clickElement(self, elementxp):
     action = ActionChains(driver)
     action.move_to_element(driver.find_element(By.XPATH, elementxp)).click().perform()
 
+def clickElements(self, element):
+    driver = self.driver
+    action = ActionChains(driver)
+    action.move_to_element(element).click().perform()
 
 def ScrolDownToElement(self, element):
     el = int(element.rect['y'])

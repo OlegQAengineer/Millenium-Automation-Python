@@ -28,7 +28,8 @@ vidioPlayBtn = By.XPATH, '//img[@alt="video play button"]'
 vidioPlayBtnXP = '//img[@alt="video play button"]'
 vidioBlock = By.XPATH, "//div[contains(@class,'player__play js')]"
 vidioBlockXP = "//div[contains(@class,'player__play js')]"
-
+sideBarMenu3pc = "//ul[contains(@class,'menu-box')]/li"
+textInvestingEnv = '//h2[text() = " Investing environment "]'
 
 def closeCookies(self):
     driver = self.driver

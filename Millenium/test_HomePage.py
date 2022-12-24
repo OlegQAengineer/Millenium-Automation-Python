@@ -12,7 +12,7 @@ from selenium import webdriver
 from selenium.webdriver.support.wait import WebDriverWait
 from Millenium.page_objects import page_objectHomeP as HP
 from Millenium.page_objects import page_objectInvestorLogin as IL
-
+from Millenium.page_objects import page_objectCareers as C
 
 class ChromeSearchHP(unittest.TestCase):
 
@@ -32,7 +32,8 @@ class ChromeSearchHP(unittest.TestCase):
         HF.clickElement(self, HP.hamburgerMenuXP)
         self.assertTrue(EC.visibility_of_element_located(HP.navMenuID))
         HF.delay()
-        driver.get_screenshot_as_file('C:/Users/varts/PycharmProjects/Millenium-Automation-Python/Millenium/Screen_Shots/NavMenuOpen.png')
+        driver.get_screenshot_as_file(
+            'C:/Users/varts/PycharmProjects/Millenium-Automation-Python/Millenium/Screen_Shots/NavMenuOpen.png')
 
     # Check that logo 'm' is functional and leave us on the Home page
     def test_mLogo(self):
@@ -85,7 +86,7 @@ class ChromeSearchHP(unittest.TestCase):
         styleActual = driver.find_element(By.XPATH, HP.vidioBlockXP).get_attribute("style")
         self.assertEqual(styleActual, "display: none;")
 
-        # Check that Side bar interactive menu is functional
+        # Check that Side bar interactive menu is functional and page is scrolling as pare menu
     def test_SidebarInteractiveMenu(self):
         driver = self.driver
         wait = WebDriverWait(driver, 10)
@@ -97,14 +98,71 @@ class ChromeSearchHP(unittest.TestCase):
         for e in menu:
             HF.clickElements(self, e)
             HF.delay()
-        # HF.clickElement(self, '//p[text() = "unique investing environment"]')
-        # time.sleep(2)
-        # yScroll = driver.execute_script("return window.scrollY")
-        # print(yScroll, "pixeli")
-        # driver.find_element(By.XPATH, HP.arrowDownXP).click()
-        # HF.delay()
-        # yScroll = driver.execute_script("return window.scrollY")
-        # self.assertEqual(yScroll, 654)
+            yScroll = driver.execute_script("return window.scrollY")
+            if yScroll == 1620:
+                continue
+            elif yScroll == 2703:
+                continue
+            elif yScroll == 3498:
+                continue
+            else:
+                print("Menu isn't functional, Bug")
+                self.assertTrue(e.is_selected())
+
+        # Check that botton is functional and careers page open
+    def test_CareersBtn(self):
+        driver = self.driver
+        wait = WebDriverWait(driver, 10)
+        wait.until(EC.visibility_of_element_located(HP.cookies))
+        HP.closeCookies(self)
+        HF.ScrolDownToElement(self.driver, driver.find_element(By.XPATH, HP.exploreCareersBtnXP))
+        HF.delay()
+        HF.clickElement(self, HP.exploreCareersBtnXP)
+        HF.delay()
+        driver.get_screenshot_as_file(
+            'C:/Users/varts/PycharmProjects/Millenium-Automation-Python/Millenium/Screen_Shots/CareersPage.png')
+        titleActual = driver.title
+        self.assertEqual(titleActual, C.title)
+
+        # Check that Footer links are functional and clickable
+    def test_FooterLinks1(self):
+        driver = self.driver
+        wait = WebDriverWait(driver, 10)
+        wait.until(EC.visibility_of_element_located(HP.cookies))
+        HP.closeCookies(self)
+        HF.ScrolDownToEndPage(driver.find_element(By.XPATH, HP.hamburgerMenuXP))
+        HF.delay()
+        menu = driver.find_elements(By.XPATH, HP.footer3pc)
+        for e in menu:
+            HF.clickElements(self, e)
+            time.sleep(5)
+            ActualTitle = driver.title
+            self.assertFalse(ActualTitle == HP.titleText)
+            driver.back()
+            HF.delay()
+            HF.ScrolDownToEndPage(driver.find_element(By.XPATH, HP.hamburgerMenuXP))
+
+    def test_FooterLinks2(self):
+        driver = self.driver
+        wait = WebDriverWait(driver, 10)
+        wait.until(EC.visibility_of_element_located(HP.cookies))
+        HP.closeCookies(self)
+        HF.ScrolDownToEndPage(driver.find_element(By.XPATH, HP.hamburgerMenuXP))
+        HF.delay()
+        menu = driver.find_elements(By.XPATH, HP.footer5pc)
+        for e in menu:
+            HF.clickElements(self, e)
+            time.sleep(5)
+            ActualTitle = driver.title
+            try:
+                self.assertFalse(ActualTitle == HP.titleText)
+            except AssertionError:
+                print("Bug, link is not clickable")
+            driver.back()
+            HF.delay()
+            HF.ScrolDownToEndPage(driver.find_element(By.XPATH, HP.hamburgerMenuXP))
+
+
 
     def tearDown(self):
         self.driver.quit()

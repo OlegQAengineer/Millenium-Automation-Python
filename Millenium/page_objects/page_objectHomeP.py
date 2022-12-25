@@ -33,7 +33,7 @@ textInvestingEnv = '//h2[text() = " Investing environment "]'
 exploreCareersBtnXP = '//a[text()=" Explore Careers "]'
 footer3pc = '//li[@id="menu-item-1463"]/ul/li/a'
 footer5pc = '//li[@id="menu-item-234"]/ul/li/a'
-
+locations = '//li[@id="menu-item-1453"]/a'
 
 
 def closeCookies(self):

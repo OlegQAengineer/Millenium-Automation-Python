@@ -1,10 +1,5 @@
 import time
 import unittest
-from _ast import arguments
-
-from selenium.webdriver import ActionChains, Keys
-from selenium.webdriver.common import actions
-
 from Millenium import myHelpFunctions as HF
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
@@ -14,7 +9,8 @@ from Millenium.page_objects import page_objectHomeP as HP
 from Millenium.page_objects import page_objectInvestorLogin as IL
 from Millenium.page_objects import page_objectCareers as C
 
-class ChromeSearchHP(unittest.TestCase):
+
+class HomePageTest(unittest.TestCase):
 
     def setUp(self):
 
